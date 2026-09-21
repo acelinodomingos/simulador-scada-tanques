@@ -6,89 +6,38 @@
 <title>Simulador Didático Estilo SCADA - Gases Medicinais e Industriais</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body {
-    font-family: 'Segoe UI', 'Consolas', monospace;
-    background: #0a0e1a;
-    color: #d0e0ff;
-    min-height: 100vh;
-    padding: 10px;
-    overflow-x: hidden;
-  }
+  body { font-family: 'Segoe UI', 'Consolas', monospace; background: #0a0e1a; color: #d0e0ff; min-height: 100vh; padding: 10px; overflow-x: hidden; }
 
-  .disclaimer-banner {
-    background: rgba(255, 170, 0, 0.15);
-    border: 2px solid #ffaa00;
-    border-radius: 8px;
-    padding: 12px 20px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    font-size: 0.85em;
-    color: #ffdd88;
-  }
+  .disclaimer-banner { background: rgba(255, 170, 0, 0.15); border: 2px solid #ffaa00; border-radius: 8px; padding: 12px 20px; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; font-size: 0.85em; color: #ffdd88; }
   .disclaimer-icon { font-size: 1.8em; flex-shrink: 0; }
   .disclaimer-text strong { color: #ffaa00; display: block; margin-bottom: 4px; font-size: 1.1em; }
   .disclaimer-text p { line-height: 1.4; margin: 0; }
 
-  .header {
-    background: linear-gradient(90deg, #0f1628, #1a2340, #0f1628);
-    border: 2px solid #2a3a5a;
-    border-radius: 8px;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    box-shadow: 0 0 20px rgba(0, 100, 200, 0.2);
-  }
-
+  .header { background: linear-gradient(90deg, #0f1628, #1a2340, #0f1628); border: 2px solid #2a3a5a; border-radius: 8px; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0, 100, 200, 0.2); }
   .logo { display: flex; align-items: center; gap: 15px; }
-  .logo-icon {
-    width: 50px; height: 50px;
-    background: linear-gradient(135deg, #00d4ff, #0066cc);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
-  }
+  .logo-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #00d4ff, #0066cc); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 0 15px rgba(0, 212, 255, 0.5); }
   .logo-text h1 { font-size: 1.2em; color: #00d4ff; letter-spacing: 1px; }
   .logo-text p { font-size: 0.7em; color: #6a8aaa; letter-spacing: 1px; }
-
   .header-info { display: flex; gap: 25px; align-items: center; }
   .info-block { text-align: right; }
   .info-label { font-size: 0.7em; color: #6a8aaa; text-transform: uppercase; letter-spacing: 1px; }
   .info-value { font-size: 1.1em; color: #fff; font-weight: bold; }
-
-  .global-status {
-    padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 0.9em; letter-spacing: 1px; border: 2px solid;
-  }
+  .global-status { padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 0.9em; letter-spacing: 1px; border: 2px solid; }
   .status-normal { background: rgba(0, 255, 136, 0.15); color: #00ff88; border-color: #00ff88; box-shadow: 0 0 15px rgba(0, 255, 136, 0.3); }
   .status-warning { background: rgba(255, 170, 0, 0.15); color: #ffaa00; border-color: #ffaa00; animation: blink 1s infinite; }
   .status-critical { background: rgba(255, 51, 85, 0.2); color: #ff3355; border-color: #ff3355; animation: blink 0.5s infinite; }
-
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  .alarm-bar {
-    background: #0f1628; border: 2px solid #2a3a5a; border-radius: 6px; padding: 8px 15px;
-    margin-bottom: 10px; min-height: 40px; display: flex; align-items: center; gap: 15px; overflow: hidden;
-  }
+  .alarm-bar { background: #0f1628; border: 2px solid #2a3a5a; border-radius: 6px; padding: 8px 15px; margin-bottom: 10px; min-height: 40px; display: flex; align-items: center; gap: 15px; overflow: hidden; }
   .alarm-bar-label { color: #ff3355; font-weight: bold; font-size: 0.85em; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
   .alarm-bar-content { flex: 1; color: #ffaa00; font-size: 0.85em; white-space: nowrap; overflow: hidden; }
 
-  .main-grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr 320px; gap: 10px; margin-bottom: 10px;
-  }
+  .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 320px; gap: 10px; margin-bottom: 10px; }
 
-  .tank-card {
-    background: linear-gradient(180deg, #0f1628, #0a0e1a); border: 2px solid #2a3a5a; border-radius: 8px;
-    padding: 15px; position: relative; transition: all 0.3s;
-  }
+  .tank-card { background: linear-gradient(180deg, #0f1628, #0a0e1a); border: 2px solid #2a3a5a; border-radius: 8px; padding: 15px; position: relative; transition: all 0.3s; }
   .tank-card.state-normal { border-color: #00ff88; box-shadow: 0 0 15px rgba(0, 255, 136, 0.2); }
   .tank-card.state-warning { border-color: #ffaa00; box-shadow: 0 0 20px rgba(255, 170, 0, 0.3); }
   .tank-card.state-critical { border-color: #ff3355; box-shadow: 0 0 25px rgba(255, 51, 85, 0.5); animation: pulseCritical 1s infinite; }
-
   @keyframes pulseCritical { 0%, 100% { box-shadow: 0 0 25px rgba(255, 51, 85, 0.5); } 50% { box-shadow: 0 0 40px rgba(255, 51, 85, 0.8); } }
 
   .tank-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #2a3a5a; }
@@ -100,30 +49,15 @@
   .badge-critical { background: rgba(255,51,85,0.2); color: #ff3355; border-color: #ff3355; animation: blink 0.5s infinite; }
 
   .tank-visual { display: flex; justify-content: center; align-items: center; margin: 10px 0; gap: 15px; }
-  .tank-body {
-    position: relative; width: 90px; height: 160px;
-    background: linear-gradient(180deg, #1a2340, #0a0e1a); border: 3px solid #4a5a7a;
-    border-radius: 15px 15px 25px 25px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-  }
-  .tank-body::before {
-    content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-    width: 30px; height: 15px; background: #4a5a7a; border-radius: 5px 5px 0 0;
-  }
+  .tank-body { position: relative; width: 90px; height: 160px; background: linear-gradient(180deg, #1a2340, #0a0e1a); border: 3px solid #4a5a7a; border-radius: 15px 15px 25px 25px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+  .tank-body::before { content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 30px; height: 15px; background: #4a5a7a; border-radius: 5px 5px 0 0; }
   .tank-liquid { position: absolute; bottom: 0; left: 0; right: 0; height: 0%; transition: height 0.5s ease; opacity: 0.85; }
   .liquid-o2 { background: linear-gradient(180deg, #66ccff, #0088cc); box-shadow: inset 0 0 15px rgba(100,200,255,0.5); }
   .liquid-n2 { background: linear-gradient(180deg, #ffcc66, #cc8800); box-shadow: inset 0 0 15px rgba(255,200,100,0.5); }
   .liquid-n2o { background: linear-gradient(180deg, #cc88ff, #6622aa); box-shadow: inset 0 0 15px rgba(200,130,255,0.5); }
-
-  .tank-liquid::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: rgba(255,255,255,0.4); animation: wave 2s ease-in-out infinite;
-  }
+  .tank-liquid::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.4); animation: wave 2s ease-in-out infinite; }
   @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
-
-  .tank-volume-label {
-    position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
-    background: rgba(0,0,0,0.8); padding: 3px 8px; border-radius: 3px; font-size: 0.7em; font-weight: bold; color: #fff; white-space: nowrap;
-  }
+  .tank-volume-label { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); padding: 3px 8px; border-radius: 3px; font-size: 0.7em; font-weight: bold; color: #fff; white-space: nowrap; }
 
   .gauges-row { display: flex; justify-content: space-around; margin: 10px 0; }
   .circular-gauge { position: relative; width: 80px; height: 80px; }
@@ -146,7 +80,6 @@
   .valve-icon { width: 25px; height: 25px; border-radius: 50%; margin: 0 auto 3px; display: flex; align-items: center; justify-content: center; font-size: 1.2em; border: 2px solid; }
   .valve-open { background: rgba(0,255,136,0.2); border-color: #00ff88; color: #00ff88; }
   .valve-closed { background: rgba(100,100,100,0.2); border-color: #666; color: #666; }
-  .valve-fault { background: rgba(255,51,85,0.2); border-color: #ff3355; color: #ff3355; animation: blink 0.5s infinite; }
   .valve-label { color: #6a8aaa; font-size: 0.85em; }
 
   .fault-panel { background: rgba(255, 51, 85, 0.1); border: 2px solid #ff3355; border-radius: 6px; padding: 12px; margin-top: 10px; display: none; }
@@ -159,11 +92,7 @@
   .fault-action-text { color: #fff; line-height: 1.6; white-space: pre-line; }
   .fault-epi { margin-top: 8px; padding: 8px; background: rgba(0, 212, 255, 0.1); border-radius: 3px; font-size: 0.8em; color: #00d4ff; border-left: 3px solid #00d4ff; }
 
-  .confirm-btn {
-    width: 100%; padding: 14px; background: linear-gradient(135deg, #00ff88, #00aa55); border: 2px solid #00ff88;
-    border-radius: 6px; color: #000; font-weight: bold; font-size: 0.9em; cursor: pointer; letter-spacing: 1px;
-    text-transform: uppercase; margin-top: 10px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); transition: all 0.2s; animation: pulseConfirm 1.5s infinite;
-  }
+  .confirm-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #00ff88, #00aa55); border: 2px solid #00ff88; border-radius: 6px; color: #000; font-weight: bold; font-size: 0.9em; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); transition: all 0.2s; animation: pulseConfirm 1.5s infinite; }
   @keyframes pulseConfirm { 0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); } 50% { box-shadow: 0 0 35px rgba(0, 255, 136, 0.8); } }
   .confirm-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0, 255, 136, 0.8); }
   .confirm-btn-hint { text-align: center; font-size: 0.72em; color: #ffaa00; margin-top: 6px; font-style: italic; }
@@ -172,11 +101,7 @@
   .panel-box { background: linear-gradient(180deg, #0f1628, #0a0e1a); border: 2px solid #2a3a5a; border-radius: 8px; padding: 12px; }
   .panel-title { color: #00d4ff; font-size: 0.85em; font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #2a3a5a; text-transform: uppercase; }
 
-  .emergency-btn {
-    width: 100%; padding: 20px; background: radial-gradient(circle, #ff3355, #cc0022); border: 4px solid #880011;
-    border-radius: 50%; color: #fff; font-weight: bold; font-size: 0.9em; cursor: pointer; letter-spacing: 2px;
-    box-shadow: 0 0 30px rgba(255, 51, 85, 0.5), inset 0 0 20px rgba(0,0,0,0.3); transition: all 0.2s; text-transform: uppercase; aspect-ratio: 1;
-  }
+  .emergency-btn { width: 100%; padding: 20px; background: radial-gradient(circle, #ff3355, #cc0022); border: 4px solid #880011; border-radius: 50%; color: #fff; font-weight: bold; font-size: 0.9em; cursor: pointer; letter-spacing: 2px; box-shadow: 0 0 30px rgba(255, 51, 85, 0.5), inset 0 0 20px rgba(0,0,0,0.3); transition: all 0.2s; text-transform: uppercase; aspect-ratio: 1; }
   .emergency-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 51, 85, 0.8); }
   .emergency-btn.active { animation: emergencyPulse 0.5s infinite; }
   @keyframes emergencyPulse { 0%, 100% { box-shadow: 0 0 30px rgba(255, 51, 85, 0.5); } 50% { box-shadow: 0 0 60px rgba(255, 51, 85, 1); } }
@@ -199,10 +124,7 @@
   .event-crit { background: rgba(255,51,85,0.15); border-color: #ff3355; color: #ff3355; }
 
   .controls-row { display: flex; gap: 8px; margin-top: 10px; }
-  .ctrl-btn {
-    flex: 1; padding: 10px; background: linear-gradient(180deg, #1a2340, #0f1628); border: 2px solid #2a3a5a;
-    border-radius: 5px; color: #00d4ff; font-weight: bold; cursor: pointer; font-size: 0.8em; letter-spacing: 1px; transition: all 0.2s;
-  }
+  .ctrl-btn { flex: 1; padding: 10px; background: linear-gradient(180deg, #1a2340, #0f1628); border: 2px solid #2a3a5a; border-radius: 5px; color: #00d4ff; font-weight: bold; cursor: pointer; font-size: 0.8em; letter-spacing: 1px; transition: all 0.2s; }
   .ctrl-btn:hover { background: linear-gradient(180deg, #2a3a5a, #1a2340); border-color: #00d4ff; }
   .ctrl-btn.stop { color: #ff3355; border-color: #ff3355; }
   .ctrl-btn.stop:hover { background: rgba(255,51,85,0.2); }
@@ -211,21 +133,14 @@
   .gas-info-title { color: #00d4ff; font-weight: bold; margin-bottom: 4px; font-size: 0.95em; }
   .gas-info-row { display: flex; justify-content: space-between; padding: 2px 0; color: #aaa; }
   .gas-info-row span:last-child { color: #fff; text-align: right; }
-  .gas-info-note { color: #ffaa00; font-weight: bold; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #2a3a5a; display: block; }
+  .gas-info-note { color: #ffaa00; font-weight: bold; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #2a3a5a; display: block; line-height: 1.4; }
 
   .cycle-counter { text-align: center; padding: 10px; background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; border-radius: 6px; margin-bottom: 10px; }
   .cycle-counter-label { font-size: 0.75em; color: #6a8aaa; text-transform: uppercase; letter-spacing: 1px; }
   .cycle-counter-value { font-size: 1.3em; color: #00d4ff; font-weight: bold; margin-top: 3px; }
 
-  @media (max-width: 1400px) {
-    .main-grid { grid-template-columns: 1fr 1fr 1fr; }
-    .side-panel { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; }
-    .side-panel .panel-box { flex: 1; min-width: 250px; }
-  }
-  @media (max-width: 900px) {
-    .main-grid { grid-template-columns: 1fr; }
-    .header { flex-direction: column; gap: 10px; }
-  }
+  @media (max-width: 1400px) { .main-grid { grid-template-columns: 1fr 1fr 1fr; } .side-panel { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; } .side-panel .panel-box { flex: 1; min-width: 250px; } }
+  @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .header { flex-direction: column; gap: 10px; } }
 </style>
 </head>
 <body>
@@ -234,7 +149,7 @@
   <div class="disclaimer-icon">⚠️</div>
   <div class="disclaimer-text">
     <strong>AVISO DE SIMULADOR DIDÁTICO</strong>
-    <p>Este sistema é um simulador estilo SCADA para fins exclusivos de treinamento e demonstração. <strong>Não substitui</strong> Procedimentos Operacionais Padrão (POPs), normas técnicas vigentes (como a <strong>ABNT NBR 12188</strong> para instalações de gases medicinais, <strong>NR-13</strong> para vasos de pressão) ou a orientação de profissionais de segurança do trabalho qualificados.</p>
+    <p>Este sistema é um simulador estilo SCADA para fins exclusivos de treinamento e demonstração. <strong>Não substitui</strong> Procedimentos Operacionais Padrão (POPs), normas técnicas vigentes (como a <strong>ABNT NBR 12188</strong> para instalações de gases medicinais, <strong>NR-13</strong> para vasos de pressão, <strong>RDC 42/2010 ANVISA</strong> e <strong>Farmacopeia Brasileira</strong>) ou a orientação de profissionais qualificados. Unidades de medida em conformidade com o <strong>Sistema Internacional (SI/INMETRO)</strong>.</p>
   </div>
 </div>
 
@@ -243,22 +158,13 @@
     <div class="logo-icon">⚗️</div>
     <div class="logo-text">
       <h1>SIMULADOR ESTILO SCADA</h1>
-      <p>GASES MEDICINAIS E INDUSTRIAIS v5.0 (PADRÃO ABNT)</p>
+      <p>GASES MEDICINAIS E INDUSTRIAIS v5.1 (PADRÃO ABNT/INMETRO)</p>
     </div>
   </div>
   <div class="header-info">
-    <div class="info-block">
-      <div class="info-label">Planta</div>
-      <div class="info-value">UNIDADE-01</div>
-    </div>
-    <div class="info-block">
-      <div class="info-label">Operador</div>
-      <div class="info-value">SHIFT-A</div>
-    </div>
-    <div class="info-block">
-      <div class="info-label">Data/Hora</div>
-      <div class="info-value" id="datetime">--</div>
-    </div>
+    <div class="info-block"><div class="info-label">Planta</div><div class="info-value">UNIDADE-01</div></div>
+    <div class="info-block"><div class="info-label">Operador</div><div class="info-value">SHIFT-A</div></div>
+    <div class="info-block"><div class="info-label">Data/Hora</div><div class="info-value" id="datetime">--</div></div>
     <div class="global-status status-normal" id="globalStatus">● OPERAÇÃO NORMAL</div>
   </div>
 </div>
@@ -277,6 +183,7 @@
 
 <div class="main-grid">
 
+  <!-- OXIGÊNIO -->
   <div class="tank-card state-normal" id="cardO2">
     <div class="tank-header">
       <div>
@@ -309,23 +216,25 @@
     </div>
     <div class="data-grid">
       <div class="data-item"><span class="data-label">Volume:</span><span class="data-value ok" id="volO2">0,0 L</span></div>
-      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlO2">0,0%</span></div>
+      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlO2">0,0 %</span></div>
       <div class="data-item"><span class="data-label">Vazão:</span><span class="data-value ok" id="flowO2">0,0 L/min</span></div>
-      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purO2">99,5%</span></div>
-      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">-183 °C</span></div>
+      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purO2">99,5 %</span></div>
+      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">−183 °C</span></div>
       <div class="data-item"><span class="data-label">Dens. (Líq.):</span><span class="data-value">1,14 kg/L</span></div>
     </div>
     <div class="valves-row">
-      <div class="valve"><div class="valve-icon valve-open" id="valveInO2">▶</div><div class="valve-label">Entrada</div></div>
-      <div class="valve"><div class="valve-icon valve-open" id="valveOutO2">▶</div><div class="valve-label">Saída</div></div>
-      <div class="valve"><div class="valve-icon valve-closed" id="valveRelO2">○</div><div class="valve-label">Alívio</div></div>
+      <div class="valve"><div class="valve-icon valve-open">▶</div><div class="valve-label">Entrada</div></div>
+      <div class="valve"><div class="valve-icon valve-open">▶</div><div class="valve-label">Saída</div></div>
+      <div class="valve"><div class="valve-icon valve-closed">○</div><div class="valve-label">Alívio</div></div>
     </div>
     <div class="gas-info">
-      <div class="gas-info-title">📋 DADOS TÉCNICOS</div>
-      <div class="gas-info-row"><span>Classe de Risco:</span><span>2.2 (Gás não inflamável, não tóxico - Oxidante)</span></div>
+      <div class="gas-info-title">📋 DADOS TÉCNICOS (ABNT/INMETRO)</div>
+      <div class="gas-info-row"><span>Classe de Risco (ANTT 5947):</span><span>2.2 + 5.1 (Oxidante)</span></div>
       <div class="gas-info-row"><span>Nº ONU:</span><span>1072</span></div>
-      <div class="gas-info-row"><span>Pressão de Trabalho:</span><span>Até 200 bar</span></div>
-      <div class="gas-info-row"><span>Temp. Máx. Armaz.:</span><span>60 °C</span></div>
+      <div class="gas-info-row"><span>Pressão de Serviço:</span><span>200 bar (20 MPa)</span></div>
+      <div class="gas-info-row"><span>Pressão de Teste:</span><span>300 bar (30 MPa)</span></div>
+      <div class="gas-info-row"><span>Temp. Máx. Armazenamento:</span><span>52 °C (125 °F)</span></div>
+      <div class="gas-info-row"><span>Forma de Fornecimento:</span><span>Gás comprimido / Líquido criogênico</span></div>
     </div>
     <div class="fault-panel" id="faultO2">
       <div class="fault-header"><span id="faultIconO2">⚠️</span><span id="faultNameO2">FALHA</span></div>
@@ -340,6 +249,7 @@
     </div>
   </div>
 
+  <!-- NITROGÊNIO -->
   <div class="tank-card state-normal" id="cardN2">
     <div class="tank-header">
       <div>
@@ -372,23 +282,25 @@
     </div>
     <div class="data-grid">
       <div class="data-item"><span class="data-label">Volume:</span><span class="data-value ok" id="volN2">0,0 L</span></div>
-      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlN2">0,0%</span></div>
+      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlN2">0,0 %</span></div>
       <div class="data-item"><span class="data-label">Vazão:</span><span class="data-value ok" id="flowN2">0,0 L/min</span></div>
-      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purN2">99,9%</span></div>
-      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">-196 °C</span></div>
+      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purN2">99,9 %</span></div>
+      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">−196 °C</span></div>
       <div class="data-item"><span class="data-label">Dens. (Líq.):</span><span class="data-value">0,81 kg/L</span></div>
     </div>
     <div class="valves-row">
-      <div class="valve"><div class="valve-icon valve-open" id="valveInN2">▶</div><div class="valve-label">Entrada</div></div>
-      <div class="valve"><div class="valve-icon valve-open" id="valveOutN2">▶</div><div class="valve-label">Saída</div></div>
-      <div class="valve"><div class="valve-icon valve-closed" id="valveRelN2">○</div><div class="valve-label">Alívio</div></div>
+      <div class="valve"><div class="valve-icon valve-open">▶</div><div class="valve-label">Entrada</div></div>
+      <div class="valve"><div class="valve-icon valve-open">▶</div><div class="valve-label">Saída</div></div>
+      <div class="valve"><div class="valve-icon valve-closed">○</div><div class="valve-label">Alívio</div></div>
     </div>
     <div class="gas-info">
-      <div class="gas-info-title">📋 DADOS TÉCNICOS</div>
-      <div class="gas-info-row"><span>Classe de Risco:</span><span>2.2 (Gás não inflamável, não tóxico - Asfixiante)</span></div>
+      <div class="gas-info-title">📋 DADOS TÉCNICOS (ABNT/INMETRO)</div>
+      <div class="gas-info-row"><span>Classe de Risco (ANTT 5947):</span><span>2.2 (Asfixiante simples)</span></div>
       <div class="gas-info-row"><span>Nº ONU:</span><span>1066</span></div>
-      <div class="gas-info-row"><span>Pressão de Trabalho:</span><span>Até 250 bar</span></div>
-      <div class="gas-info-row"><span>Temp. Máx. Armaz.:</span><span>80 °C</span></div>
+      <div class="gas-info-row"><span>Pressão de Serviço:</span><span>200 bar (20 MPa)</span></div>
+      <div class="gas-info-row"><span>Pressão de Teste:</span><span>300 bar (30 MPa)</span></div>
+      <div class="gas-info-row"><span>Temp. Máx. Armazenamento:</span><span>52 °C (125 °F)</span></div>
+      <div class="gas-info-row"><span>Forma de Fornecimento:</span><span>Gás comprimido / Líquido criogênico</span></div>
     </div>
     <div class="fault-panel" id="faultN2">
       <div class="fault-header"><span id="faultIconN2">⚠️</span><span id="faultNameN2">FALHA</span></div>
@@ -403,6 +315,7 @@
     </div>
   </div>
 
+  <!-- ÓXIDO NITROSO -->
   <div class="tank-card state-normal" id="cardN2O">
     <div class="tank-header">
       <div>
@@ -435,24 +348,26 @@
     </div>
     <div class="data-grid">
       <div class="data-item"><span class="data-label">Volume:</span><span class="data-value ok" id="volN2O">0,0 L</span></div>
-      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlN2O">0,0%</span></div>
+      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlN2O">0,0 %</span></div>
       <div class="data-item"><span class="data-label">Vazão:</span><span class="data-value ok" id="flowN2O">0,0 L/min</span></div>
-      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purN2O">99,0%</span></div>
-      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">-88 °C</span></div>
+      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purN2O">99,0 %</span></div>
+      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">−88 °C</span></div>
       <div class="data-item"><span class="data-label">Dens. (Líq.):</span><span class="data-value">1,22 kg/L</span></div>
     </div>
     <div class="valves-row">
-      <div class="valve"><div class="valve-icon valve-open" id="valveInN2O">▶</div><div class="valve-label">Entrada</div></div>
-      <div class="valve"><div class="valve-icon valve-open" id="valveOutN2O">▶</div><div class="valve-label">Saída</div></div>
-      <div class="valve"><div class="valve-icon valve-closed" id="valveRelN2O">○</div><div class="valve-label">Alívio</div></div>
+      <div class="valve"><div class="valve-icon valve-open">▶</div><div class="valve-label">Entrada</div></div>
+      <div class="valve"><div class="valve-icon valve-open">▶</div><div class="valve-label">Saída</div></div>
+      <div class="valve"><div class="valve-icon valve-closed">○</div><div class="valve-label">Alívio</div></div>
     </div>
     <div class="gas-info">
-      <div class="gas-info-title">📋 DADOS TÉCNICOS</div>
-      <div class="gas-info-row"><span>Classe de Risco:</span><span>2.2 + 5.1 (Oxidante)</span></div>
+      <div class="gas-info-title">📋 DADOS TÉCNICOS (ABNT/INMETRO)</div>
+      <div class="gas-info-row"><span>Classe de Risco (ANTT 5947):</span><span>2.2 + 5.1 (Oxidante)</span></div>
       <div class="gas-info-row"><span>Nº ONU:</span><span>1070</span></div>
-      <div class="gas-info-row"><span>Pressão de Trabalho:</span><span>Até 150 bar</span></div>
-      <div class="gas-info-row"><span>Temp. Máx. Armaz.:</span><span>50 °C</span></div>
-      <span class="gas-info-note">⚠️ Nota Técnica: A pressão de vapor do N₂O permanece praticamente constante enquanto houver fase líquida no interior do cilindro, não indicando o nível de preenchimento.</span>
+      <div class="gas-info-row"><span>Pressão de Vapor a 20 °C:</span><span>≈ 51 bar (5,1 MPa)</span></div>
+      <div class="gas-info-row"><span>Pressão de Teste do Cilindro:</span><span>225 bar (22,5 MPa)</span></div>
+      <div class="gas-info-row"><span>Temp. Máx. Armazenamento:</span><span>52 °C (125 °F)</span></div>
+      <div class="gas-info-row"><span>Forma de Fornecimento:</span><span>Líquido sob pressão de vapor</span></div>
+      <span class="gas-info-note">⚠️ Nota Técnica: O N₂O é armazenado como líquido em equilíbrio com seu vapor. A pressão indicada no manômetro (≈ 51 bar a 20 °C) permanece praticamente constante enquanto houver fase líquida, NÃO indicando o nível de preenchimento. Para medir o volume, deve-se pesar o cilindro.</span>
     </div>
     <div class="fault-panel" id="faultN2O">
       <div class="fault-header"><span id="faultIconN2O">⚠️</span><span id="faultNameN2O">FALHA</span></div>
@@ -467,6 +382,7 @@
     </div>
   </div>
 
+  <!-- PAINEL LATERAL -->
   <div class="side-panel">
     <div class="panel-box" style="text-align:center;">
       <div class="panel-title">🚨 PARADA DE EMERGÊNCIA</div>
@@ -509,21 +425,21 @@ function formatarBR(valor, decimais = 1) {
 }
 
 const tanks = {
-  O2: { name: 'OXIGÊNIO', formula: 'O₂', totalVolume: 50, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.5, maxPress: 200, maxTemp: 60, fault: null, color: '#00aaff', liquidClass: 'liquid-o2', history: [] },
-  N2: { name: 'NITROGÊNIO', formula: 'N₂', totalVolume: 75, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.9, maxPress: 250, maxTemp: 80, fault: null, color: '#ffaa00', liquidClass: 'liquid-n2', history: [] },
-  N2O: { name: 'ÓXIDO NITROSO', formula: 'N₂O', totalVolume: 40, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.0, maxPress: 150, maxTemp: 50, fault: null, color: '#aa44ff', liquidClass: 'liquid-n2o', history: [] }
+  O2: { name: 'OXIGÊNIO', formula: 'O₂', totalVolume: 50, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.5, maxPress: 200, maxTemp: 60, fault: null, color: '#00aaff', history: [] },
+  N2: { name: 'NITROGÊNIO', formula: 'N₂', totalVolume: 75, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.9, maxPress: 200, maxTemp: 60, fault: null, color: '#ffaa00', history: [] },
+  N2O: { name: 'ÓXIDO NITROSO', formula: 'N₂O', totalVolume: 40, currentVolume: 0, pressure: 51, temp: 20, flow: 0, purity: 99.0, maxPress: 225, maxTemp: 52, fault: null, color: '#aa44ff', history: [] }
 };
 
 const tankKeys = ['O2', 'N2', 'N2O'];
-let running = false, interval = null, currentTestIndex = 0, testPhase = 'normal', emergencyActive = false, waitingConfirmation = false, audioCtx = null;
+let running = false, interval = null, currentTestIndex = 0, emergencyActive = false, waitingConfirmation = false, audioCtx = null;
 
 const faultTypes = [
-  { id: 'overpress', name: 'SOBREPRESSÃO CRÍTICA', icon: '🔴', desc: 'Pressão interna excedeu o limite seguro de operação. Risco iminente de ruptura do vaso de pressão.', action: '1) Acionar a válvula de alívio manual imediatamente.\n2) Isolar a entrada de gás.\n3) Evacuar o raio de 15 metros.\n4) Acionar a brigada de emergência.\n5) Não tentar reparar o equipamento sob pressão.', epi: 'Protetor facial, luvas de raspa, avental de raspa, protetor auricular', effect: (t) => { t.pressure = t.maxPress * (1.1 + Math.random() * 0.3); } },
-  { id: 'overtemp', name: 'SUPERAQUECIMENTO', icon: '🔥', desc: 'Temperatura acima do limite operacional. Risco de aumento de pressão por expansão térmica.', action: '1) Verificar o sistema de refrigeração/ventilação.\n2) Reduzir a vazão de entrada.\n3) Aspergir água na parte externa do cilindro (se seguro).\n4) Monitorar a pressão continuamente.', epi: 'Luvas térmicas, protetor facial, roupa de aproximação de fogo', effect: (t) => { t.temp = t.maxTemp * (1.1 + Math.random() * 0.2); } },
-  { id: 'leak', name: 'VAZAMENTO DETECTADO', icon: '💧', desc: 'Vazamento de gás identificado. Risco de asfixia (N₂) ou enriquecimento de atmosfera (O₂).', action: '1) Isolar a área imediatamente.\n2) Promover a ventilação natural ou forçada do local.\n3) Utilizar detector de gás para mapear a nuvem.\n4) Reparar apenas com o sistema totalmente despressurizado.', epi: 'Máscara autônoma de ar (SCBA), detector portátil de O₂, roupa adequada', effect: (t) => { t.flow = -Math.abs(t.flow || 10) * 0.5; t.currentVolume = Math.max(0, t.currentVolume - 2); } },
+  { id: 'overpress', name: 'SOBREPRESSÃO CRÍTICA', icon: '🔴', desc: 'Pressão interna excedeu o limite seguro de operação. Risco iminente de ruptura do vaso de pressão (conforme NR-13).', action: '1) Acionar a válvula de alívio manual imediatamente.\n2) Isolar a entrada de gás.\n3) Evacuar o raio de 15 metros.\n4) Acionar a brigada de emergência.\n5) Não tentar reparar o equipamento sob pressão.', epi: 'Protetor facial, luvas de raspa, avental de raspa, protetor auricular', effect: (t) => { t.pressure = t.maxPress * (1.1 + Math.random() * 0.3); } },
+  { id: 'overtemp', name: 'SUPERAQUECIMENTO', icon: '🔥', desc: 'Temperatura acima do limite operacional (52 °C conforme DOT/CGA). Risco de aumento de pressão por expansão térmica.', action: '1) Verificar o sistema de refrigeração/ventilação.\n2) Reduzir a vazão de entrada.\n3) Aspergir água na parte externa do cilindro (se seguro).\n4) Monitorar a pressão continuamente.', epi: 'Luvas térmicas, protetor facial, roupa de aproximação', effect: (t) => { t.temp = t.maxTemp * (1.1 + Math.random() * 0.2); } },
+  { id: 'leak', name: 'VAZAMENTO DETECTADO', icon: '💧', desc: 'Vazamento de gás identificado. Risco de asfixia (N₂) ou enriquecimento de atmosfera (O₂).', action: '1) Isolar a área imediatamente.\n2) Promover a ventilação natural ou forçada do local.\n3) Utilizar detector de gás para mapear a nuvem.\n4) Reparar apenas com o sistema totalmente despressurizado.', epi: 'Máscara autônoma de ar (SCBA), detector portátil de O₂', effect: (t) => { t.flow = -Math.abs(t.flow || 10) * 0.5; t.currentVolume = Math.max(0, t.currentVolume - 2); } },
   { id: 'valve', name: 'VÁLVULA TRAVADA', icon: '🔧', desc: 'Válvula de controle não responde aos comandos. Impossível regular o fluxo do gás.', action: '1) Acionar a válvula manual de backup (se disponível).\n2) Isolar o tanque a montante.\n3) Solicitar manutenção urgente.\n4) Preparar tanque reserva para substituição.', epi: 'Luvas de proteção mecânica, óculos de segurança', effect: (t) => { t.flow = 0; } },
-  { id: 'sensor', name: 'FALHA DE INSTRUMENTAÇÃO', icon: '📡', desc: 'Sensor de telemetria com leitura inconsistente. Impossível confiar nos valores exibidos no painel.', action: '1) Conferir as leituras com instrumento padrão portátil.\n2) Operar com monitoramento manual.\n3) Solicitar calibração ou troca do sensor.\n4) Registrar leituras manuais a cada 15 minutos.', epi: 'Multímetro, manômetro padrão, termômetro calibrado', effect: (t) => { t.pressure += (Math.random() - 0.5) * 30; t.temp += (Math.random() - 0.5) * 15; } },
-  { id: 'contam', name: 'CONTAMINAÇÃO DO GÁS', icon: '⚗️', desc: 'Pureza do gás abaixo do especificado. Produto impróprio para uso e pode danificar equipamentos a jusante.', action: '1) Isolar o tanque da rede de distribuição.\n2) Drenar o conteúdo para o sistema de ventilação/exaustão.\n3) Investigar a fonte da contaminação.\n4) Limpar o tanque antes de qualquer reabastecimento.', epi: 'Máscara com filtro químico apropriado, luvas nitrílicas', effect: (t) => { t.purity = 85 + Math.random() * 10; } },
+  { id: 'sensor', name: 'FALHA DE INSTRUMENTAÇÃO', icon: '📡', desc: 'Sensor de telemetria com leitura inconsistente. Impossível confiar nos valores exibidos no painel.', action: '1) Conferir as leituras com instrumento padrão portátil.\n2) Operar com monitoramento manual.\n3) Solicitar calibração (RBC/INMETRO) ou troca do sensor.\n4) Registrar leituras manuais a cada 15 minutos.', epi: 'Multímetro, manômetro padrão calibrado, termômetro', effect: (t) => { t.pressure += (Math.random() - 0.5) * 30; t.temp += (Math.random() - 0.5) * 15; } },
+  { id: 'contam', name: 'CONTAMINAÇÃO DO GÁS', icon: '⚗️', desc: 'Pureza do gás abaixo do especificado na Farmacopeia Brasileira. Produto impróprio para uso medicinal.', action: '1) Isolar o tanque da rede de distribuição.\n2) Drenar o conteúdo para o sistema de ventilação.\n3) Investigar a fonte da contaminação.\n4) Limpar o tanque antes de qualquer reabastecimento.', epi: 'Máscara com filtro químico apropriado, luvas nitrílicas', effect: (t) => { t.purity = 85 + Math.random() * 10; } },
   { id: 'lowlevel', name: 'NÍVEL CRÍTICO BAIXO', icon: '⚠️', desc: 'Volume abaixo do mínimo operacional. Risco de cavitação em bombas e interrupção do processo.', action: '1) Acionar o sistema de backup (manifold).\n2) Programar o reabastecimento ou troca do cilindro com urgência.\n3) Reduzir o consumo se possível.\n4) Notificar o setor de suprimentos/logística.', epi: 'Nenhum especial - operação padrão', effect: (t) => { t.currentVolume = t.totalVolume * 0.08; } }
 ];
 
@@ -564,9 +480,9 @@ function updateTankUI(key) {
   document.getElementById('liquid' + key).style.height = pct + '%';
   document.getElementById('volLabel' + key).textContent = formatarBR(t.currentVolume, 1) + ' / ' + t.totalVolume + ' L';
   document.getElementById('vol' + key).textContent = formatarBR(t.currentVolume, 1) + ' L';
-  document.getElementById('lvl' + key).textContent = formatarBR(pct, 1) + '%';
+  document.getElementById('lvl' + key).textContent = formatarBR(pct, 1) + ' %';
   document.getElementById('flow' + key).textContent = formatarBR(t.flow, 1) + ' L/min';
-  document.getElementById('pur' + key).textContent = formatarBR(t.purity, 1) + '%';
+  document.getElementById('pur' + key).textContent = formatarBR(t.purity, 1) + ' %';
   document.getElementById('pressVal' + key).textContent = formatarBR(t.pressure, 0);
   document.getElementById('tempVal' + key).textContent = formatarBR(t.temp, 0);
   
@@ -652,7 +568,9 @@ function simulate() {
     if (emergencyActive) { t.flow = 0; t.pressure = Math.max(0, t.pressure - 0.5); }
     else if (!t.fault) {
       if (t.currentVolume < t.totalVolume * 0.95) {
-        t.currentVolume += 0.3 + Math.random() * 0.2; t.pressure += 0.8 + Math.random() * 0.4;
+        t.currentVolume += 0.3 + Math.random() * 0.2; 
+        if (key === 'N2O') { t.pressure = 51 + (Math.random() - 0.5) * 2; }
+        else { t.pressure += 0.8 + Math.random() * 0.4; }
         t.temp += (Math.random() - 0.4) * 0.3; t.flow = 15 + Math.random() * 8;
       } else { t.currentVolume = t.totalVolume * (0.95 + Math.random() * 0.03); t.flow = 2 + Math.random() * 2; }
     } else { t.fault.effect(t); }
@@ -666,14 +584,14 @@ function simulate() {
 
 function startTest() {
   if (!running || emergencyActive || waitingConfirmation) return;
-  const key = tankKeys[currentTestIndex]; testPhase = 'testing'; updateCycleDisplay();
+  const key = tankKeys[currentTestIndex]; updateCycleDisplay();
   logEvent(`🔍 Iniciando teste em ${tanks[key].name} (${tanks[key].formula})`, 'info');
   setTimeout(() => { if (!running || waitingConfirmation) return; applyFault(key); }, 2500);
 }
 
 function applyFault(key) {
   const fault = faultTypes[Math.floor(Math.random() * faultTypes.length)];
-  tanks[key].fault = fault; testPhase = 'fault'; waitingConfirmation = true;
+  tanks[key].fault = fault; waitingConfirmation = true;
   logEvent(`🚨 ${tanks[key].name}: ${fault.icon} ${fault.name}`, 'crit');
   logEvent(`   → ⏱️ Leia as instruções e clique em CONFIRMAR`, 'info');
   playAlarmSound('critical'); updateTankUI(key); updateGlobalStatus();
@@ -683,8 +601,9 @@ function confirmReading(key) {
   if (!waitingConfirmation) return;
   const t = tanks[key]; if (!t.fault) return;
   t.fault = null;
-  if (t.pressure > t.maxPress) t.pressure = t.maxPress * 0.7;
-  if (t.temp > t.maxTemp) t.temp = 40;
+  if (key === 'N2O') { t.pressure = 51; }
+  else if (t.pressure > t.maxPress) { t.pressure = t.maxPress * 0.7; }
+  if (t.temp > t.maxTemp) t.temp = 20;
   if (t.flow < 0) t.flow = 15;
   if (t.purity < 95) t.purity = 99;
   if (t.currentVolume < t.totalVolume * 0.2) t.currentVolume = t.totalVolume * 0.5;
@@ -718,10 +637,13 @@ function resetSim() {
   running = false; emergencyActive = false; waitingConfirmation = false; clearInterval(interval);
   document.getElementById('btnStart').textContent = '▶ INICIAR';
   document.getElementById('emergencyBtn').classList.remove('active');
-  currentTestIndex = 0; testPhase = 'normal';
+  currentTestIndex = 0;
   tankKeys.forEach(key => {
-    tanks[key].currentVolume = 0; tanks[key].pressure = 0; tanks[key].temp = 20;
-    tanks[key].flow = 0; tanks[key].purity = key === 'O2' ? 99.5 : key === 'N2' ? 99.9 : 99.0;
+    tanks[key].currentVolume = 0; 
+    tanks[key].pressure = key === 'N2O' ? 51 : 0;
+    tanks[key].temp = 20;
+    tanks[key].flow = 0; 
+    tanks[key].purity = key === 'O2' ? 99.5 : key === 'N2' ? 99.9 : 99.0;
     tanks[key].fault = null; tanks[key].history = []; updateTankUI(key);
   });
   updateGlobalStatus(); updateCycleDisplay(); drawTrend();
