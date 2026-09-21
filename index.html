@@ -4,6 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulador Didático Estilo SCADA - Gases Medicinais e Industriais</title>
+
+<!-- SEO / identificação de autoria -->
+<meta name="description" content="Simulador didático estilo SCADA para tanques de O₂, N₂ e N₂O (gases medicinais e industriais), criado por Acelino Domingos Correia Filho, ex-gestor de fármacos gasosos e criogênicos do INCA/RJ.">
+<meta name="author" content="Acelino Domingos Correia Filho">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://acelinodomingos.github.io/simulador-scada-tanques/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Simulador SCADA - Gases Medicinais e Industriais">
+<meta property="og:description" content="Simulador didático de tanques de O₂, N₂ e N₂O, por Acelino Domingos Correia Filho.">
+<meta property="og:url" content="https://acelinodomingos.github.io/simulador-scada-tanques/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulador Didático Estilo SCADA - Gases Medicinais e Industriais",
+  "url": "https://acelinodomingos.github.io/simulador-scada-tanques/",
+  "applicationCategory": "EducationalApplication",
+  "inLanguage": "pt-BR",
+  "author": {
+    "@type": "Person",
+    "name": "Acelino Domingos Correia Filho",
+    "alternateName": "Vamos",
+    "sameAs": [
+      "https://github.com/acelinodomingos",
+      "https://www.researchgate.net/profile/ACELINO_CORREIA_FILHO2",
+      "https://br.linkedin.com/in/acelino-domingos-correia-filho-a1aa0266"
+    ]
+  }
+}
+</script>
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', 'Consolas', monospace; background: #0a0e1a; color: #d0e0ff; min-height: 100vh; padding: 10px; overflow-x: hidden; }
@@ -138,6 +170,12 @@
   .cycle-counter { text-align: center; padding: 10px; background: rgba(0, 212, 255, 0.1); border: 1px solid #00d4ff; border-radius: 6px; margin-bottom: 10px; }
   .cycle-counter-label { font-size: 0.75em; color: #6a8aaa; text-transform: uppercase; letter-spacing: 1px; }
   .cycle-counter-value { font-size: 1.3em; color: #00d4ff; font-weight: bold; margin-top: 3px; }
+
+  .site-footer { background: linear-gradient(180deg, #0f1628, #0a0e1a); border: 2px solid #2a3a5a; border-radius: 8px; padding: 14px 20px; margin-top: 10px; text-align: center; font-size: 0.8em; color: #6a8aaa; line-height: 1.6; }
+  .site-footer strong { color: #d0e0ff; }
+  .site-footer a { color: #00d4ff; text-decoration: none; margin: 0 8px; font-weight: bold; }
+  .site-footer a:hover { text-decoration: underline; }
+  .footer-links { margin-top: 6px; }
 
   @media (max-width: 1400px) { .main-grid { grid-template-columns: 1fr 1fr 1fr; } .side-panel { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; } .side-panel .panel-box { flex: 1; min-width: 250px; } }
   @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } .header { flex-direction: column; gap: 10px; } }
@@ -418,6 +456,16 @@
   </div>
 
 </div>
+
+<!-- RODAPÉ DE AUTORIA -->
+<footer class="site-footer">
+  <p>Simulador criado por <strong>Acelino Domingos Correia Filho</strong> — ex-gestor de fármacos gasosos e rede de criogênicos do INCA/RJ, hoje dedicado a Data Science e IA aplicada à saúde.</p>
+  <p class="footer-links">
+    <a href="https://github.com/acelinodomingos" rel="me noopener" target="_blank">GitHub</a>
+    <a href="https://www.researchgate.net/profile/ACELINO_CORREIA_FILHO2" rel="me noopener" target="_blank">ResearchGate</a>
+    <a href="https://br.linkedin.com/in/acelino-domingos-correia-filho-a1aa0266" rel="me noopener" target="_blank">LinkedIn</a>
+  </p>
+</footer>
 
 <script>
 function formatarBR(valor, decimais = 1) {
