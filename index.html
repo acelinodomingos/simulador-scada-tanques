@@ -16,7 +16,6 @@
     overflow-x: hidden;
   }
 
-  /* AVISO LEGAL / DIDÁTICO (PADRÃO BRASILEIRO) */
   .disclaimer-banner {
     background: rgba(255, 170, 0, 0.15);
     border: 2px solid #ffaa00;
@@ -33,7 +32,6 @@
   .disclaimer-text strong { color: #ffaa00; display: block; margin-bottom: 4px; font-size: 1.1em; }
   .disclaimer-text p { line-height: 1.4; margin: 0; }
 
-  /* HEADER INDUSTRIAL */
   .header {
     background: linear-gradient(90deg, #0f1628, #1a2340, #0f1628);
     border: 2px solid #2a3a5a;
@@ -72,7 +70,6 @@
 
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  /* BARRA DE ALARMES */
   .alarm-bar {
     background: #0f1628; border: 2px solid #2a3a5a; border-radius: 6px; padding: 8px 15px;
     margin-bottom: 10px; min-height: 40px; display: flex; align-items: center; gap: 15px; overflow: hidden;
@@ -80,12 +77,10 @@
   .alarm-bar-label { color: #ff3355; font-weight: bold; font-size: 0.85em; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
   .alarm-bar-content { flex: 1; color: #ffaa00; font-size: 0.85em; white-space: nowrap; overflow: hidden; }
 
-  /* LAYOUT PRINCIPAL */
   .main-grid {
     display: grid; grid-template-columns: 1fr 1fr 1fr 320px; gap: 10px; margin-bottom: 10px;
   }
 
-  /* CARD DO TANQUE */
   .tank-card {
     background: linear-gradient(180deg, #0f1628, #0a0e1a); border: 2px solid #2a3a5a; border-radius: 8px;
     padding: 15px; position: relative; transition: all 0.3s;
@@ -104,7 +99,6 @@
   .badge-warning { background: rgba(255,170,0,0.15); color: #ffaa00; border-color: #ffaa00; animation: blink 1s infinite; }
   .badge-critical { background: rgba(255,51,85,0.2); color: #ff3355; border-color: #ff3355; animation: blink 0.5s infinite; }
 
-  /* VISUAL DO TANQUE */
   .tank-visual { display: flex; justify-content: center; align-items: center; margin: 10px 0; gap: 15px; }
   .tank-body {
     position: relative; width: 90px; height: 160px;
@@ -131,7 +125,6 @@
     background: rgba(0,0,0,0.8); padding: 3px 8px; border-radius: 3px; font-size: 0.7em; font-weight: bold; color: #fff; white-space: nowrap;
   }
 
-  /* GAUGES CIRCULARES */
   .gauges-row { display: flex; justify-content: space-around; margin: 10px 0; }
   .circular-gauge { position: relative; width: 80px; height: 80px; }
   .circular-gauge svg { transform: rotate(-90deg); width: 100%; height: 100%; }
@@ -142,14 +135,12 @@
   .gauge-unit { font-size: 0.6em; color: #6a8aaa; }
   .gauge-label { text-align: center; font-size: 0.65em; color: #6a8aaa; margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
 
-  /* DADOS NUMÉRICOS */
   .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; font-size: 0.8em; }
   .data-item { background: rgba(10, 14, 26, 0.8); border: 1px solid #2a3a5a; border-radius: 4px; padding: 6px 8px; display: flex; justify-content: space-between; align-items: center; }
   .data-label { color: #6a8aaa; font-size: 0.85em; }
   .data-value { color: #fff; font-weight: bold; }
   .data-value.ok { color: #00ff88; } .data-value.warn { color: #ffaa00; } .data-value.crit { color: #ff3355; }
 
-  /* VÁLVULAS */
   .valves-row { display: flex; justify-content: space-around; margin: 8px 0; padding: 8px; background: rgba(10, 14, 26, 0.6); border-radius: 4px; }
   .valve { text-align: center; font-size: 0.7em; }
   .valve-icon { width: 25px; height: 25px; border-radius: 50%; margin: 0 auto 3px; display: flex; align-items: center; justify-content: center; font-size: 1.2em; border: 2px solid; }
@@ -158,7 +149,6 @@
   .valve-fault { background: rgba(255,51,85,0.2); border-color: #ff3355; color: #ff3355; animation: blink 0.5s infinite; }
   .valve-label { color: #6a8aaa; font-size: 0.85em; }
 
-  /* PAINEL DE FALHA */
   .fault-panel { background: rgba(255, 51, 85, 0.1); border: 2px solid #ff3355; border-radius: 6px; padding: 12px; margin-top: 10px; display: none; }
   .fault-panel.active { display: block; animation: slideDown 0.3s ease; }
   @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -178,7 +168,6 @@
   .confirm-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0, 255, 136, 0.8); }
   .confirm-btn-hint { text-align: center; font-size: 0.72em; color: #ffaa00; margin-top: 6px; font-style: italic; }
 
-  /* PAINEL LATERAL */
   .side-panel { display: flex; flex-direction: column; gap: 10px; }
   .panel-box { background: linear-gradient(180deg, #0f1628, #0a0e1a); border: 2px solid #2a3a5a; border-radius: 8px; padding: 12px; }
   .panel-title { color: #00d4ff; font-size: 0.85em; font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #2a3a5a; text-transform: uppercase; }
@@ -241,7 +230,6 @@
 </head>
 <body>
 
-<!-- AVISO LEGAL / DIDÁTICO (PADRÃO BRASILEIRO) -->
 <div class="disclaimer-banner">
   <div class="disclaimer-icon">⚠️</div>
   <div class="disclaimer-text">
@@ -250,7 +238,6 @@
   </div>
 </div>
 
-<!-- HEADER -->
 <div class="header">
   <div class="logo">
     <div class="logo-icon">⚗️</div>
@@ -276,13 +263,11 @@
   </div>
 </div>
 
-<!-- BARRA DE ALARMES -->
 <div class="alarm-bar">
   <div class="alarm-bar-label">🔔 ALARMES:</div>
   <div class="alarm-bar-content" id="alarmBar">Nenhum alarme ativo - Sistema operando dentro dos parâmetros</div>
 </div>
 
-<!-- CONTADOR DE CICLO -->
 <div class="cycle-counter">
   <div class="cycle-counter-label">Ciclo de Teste Atual</div>
   <div class="cycle-counter-value" id="cycleDisplay">
@@ -290,10 +275,8 @@
   </div>
 </div>
 
-<!-- GRID PRINCIPAL -->
 <div class="main-grid">
 
-  <!-- TANQUE OXIGÊNIO -->
   <div class="tank-card state-normal" id="cardO2">
     <div class="tank-header">
       <div>
@@ -357,7 +340,6 @@
     </div>
   </div>
 
-  <!-- TANQUE NITROGÊNIO -->
   <div class="tank-card state-normal" id="cardN2">
     <div class="tank-header">
       <div>
@@ -421,7 +403,6 @@
     </div>
   </div>
 
-  <!-- TANQUE ÓXIDO NITROSO -->
   <div class="tank-card state-normal" id="cardN2O">
     <div class="tank-header">
       <div>
@@ -486,7 +467,6 @@
     </div>
   </div>
 
-  <!-- PAINEL LATERAL -->
   <div class="side-panel">
     <div class="panel-box" style="text-align:center;">
       <div class="panel-title">🚨 PARADA DE EMERGÊNCIA</div>
@@ -524,7 +504,6 @@
 </div>
 
 <script>
-// Função auxiliar para formatar números no padrão brasileiro (vírgula para decimais)
 function formatarBR(valor, decimais = 1) {
   return valor.toFixed(decimais).replace('.', ',');
 }
@@ -771,4 +750,3 @@ tankKeys.forEach(updateTankUI); updateGlobalStatus(); updateCycleDisplay(); draw
 </script>
 </body>
 </html>
-🚀 v5.0: Padronização completa ABNT/INMETRO (vírgulas, NBR 12188, nota N2O)
