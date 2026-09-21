@@ -447,5 +447,328 @@
       <div>
         <div class="circular-gauge">
           <svg viewBox="0 0 80 80"><circle class="gauge-bg" cx="40" cy="40" r="32"/><circle class="gauge-fill" id="gaugeTempN2O" cx="40" cy="40" r="32" stroke="#00ff88" stroke-dasharray="201" stroke-dashoffset="201"/></svg>
-          <div class="gauge-center"><div class="gauge-value" id="tempValN2O
-                                     🚀 v5.0: Padronização completa ABNT/INMETRO (vírgulas, NBR 12188, nota N2O)
+          <div class="gauge-center"><div class="gauge-value" id="tempValN2O">20</div><div class="gauge-unit">°C</div></div>
+        </div>
+        <div class="gauge-label">Temperatura</div>
+      </div>
+    </div>
+    <div class="data-grid">
+      <div class="data-item"><span class="data-label">Volume:</span><span class="data-value ok" id="volN2O">0,0 L</span></div>
+      <div class="data-item"><span class="data-label">Nível:</span><span class="data-value ok" id="lvlN2O">0,0%</span></div>
+      <div class="data-item"><span class="data-label">Vazão:</span><span class="data-value ok" id="flowN2O">0,0 L/min</span></div>
+      <div class="data-item"><span class="data-label">Pureza:</span><span class="data-value ok" id="purN2O">99,0%</span></div>
+      <div class="data-item"><span class="data-label">T. Ebulição:</span><span class="data-value">-88 °C</span></div>
+      <div class="data-item"><span class="data-label">Dens. (Líq.):</span><span class="data-value">1,22 kg/L</span></div>
+    </div>
+    <div class="valves-row">
+      <div class="valve"><div class="valve-icon valve-open" id="valveInN2O">▶</div><div class="valve-label">Entrada</div></div>
+      <div class="valve"><div class="valve-icon valve-open" id="valveOutN2O">▶</div><div class="valve-label">Saída</div></div>
+      <div class="valve"><div class="valve-icon valve-closed" id="valveRelN2O">○</div><div class="valve-label">Alívio</div></div>
+    </div>
+    <div class="gas-info">
+      <div class="gas-info-title">📋 DADOS TÉCNICOS</div>
+      <div class="gas-info-row"><span>Classe de Risco:</span><span>2.2 + 5.1 (Oxidante)</span></div>
+      <div class="gas-info-row"><span>Nº ONU:</span><span>1070</span></div>
+      <div class="gas-info-row"><span>Pressão de Trabalho:</span><span>Até 150 bar</span></div>
+      <div class="gas-info-row"><span>Temp. Máx. Armaz.:</span><span>50 °C</span></div>
+      <span class="gas-info-note">⚠️ Nota Técnica: A pressão de vapor do N₂O permanece praticamente constante enquanto houver fase líquida no interior do cilindro, não indicando o nível de preenchimento.</span>
+    </div>
+    <div class="fault-panel" id="faultN2O">
+      <div class="fault-header"><span id="faultIconN2O">⚠️</span><span id="faultNameN2O">FALHA</span></div>
+      <div class="fault-desc" id="faultDescN2O">-</div>
+      <div class="fault-action">
+        <div class="fault-action-title">🛠️ PROCEDIMENTO DE EMERGÊNCIA:</div>
+        <div class="fault-action-text" id="faultActionN2O">-</div>
+        <div class="fault-epi" id="faultEpiN2O">🦺 EPIs obrigatórios: -</div>
+      </div>
+      <button class="confirm-btn" onclick="confirmReading('N2O')">✓ LI E CONFIRMEI - RETESTAR SISTEMA</button>
+      <div class="confirm-btn-hint">⏱️ Leia com calma antes de prosseguir</div>
+    </div>
+  </div>
+
+  <!-- PAINEL LATERAL -->
+  <div class="side-panel">
+    <div class="panel-box" style="text-align:center;">
+      <div class="panel-title">🚨 PARADA DE EMERGÊNCIA</div>
+      <button class="emergency-btn" id="emergencyBtn" onclick="triggerEmergency()">PARADA<br>GERAL</button>
+      <div style="margin-top:10px; font-size:0.75em; color:#ffaa00;">Acione em caso de risco iminente</div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-title">📈 TENDÊNCIA - PRESSÃO (bar)</div>
+      <canvas class="trend-canvas" id="trendCanvas"></canvas>
+      <div class="trend-legend">
+        <div class="legend-item"><div class="legend-color" style="background:#00aaff;"></div>O₂</div>
+        <div class="legend-item"><div class="legend-color" style="background:#ffaa00;"></div>N₂</div>
+        <div class="legend-item"><div class="legend-color" style="background:#aa44ff;"></div>N₂O</div>
+      </div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-title">📋 LOG DE EVENTOS</div>
+      <div class="event-log" id="eventLog">
+        <div class="event-item event-info"><span class="event-time">--:--:--</span><span class="event-msg">Sistema iniciado - aguardando</span></div>
+      </div>
+    </div>
+    <div class="panel-box">
+      <div class="panel-title">⚙️ CONTROLES</div>
+      <div class="controls-row">
+        <button class="ctrl-btn" id="btnStart" onclick="toggleSim()">▶ INICIAR</button>
+        <button class="ctrl-btn stop" onclick="resetSim()">⟲ RESET</button>
+      </div>
+      <div class="controls-row">
+        <button class="ctrl-btn" onclick="acknowledgeAlarm()">✓ ACK ALARME</button>
+        <button class="ctrl-btn" onclick="triggerTest()">🔧 TESTE MANUAL</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Função auxiliar para formatar números no padrão brasileiro (vírgula para decimais)
+function formatarBR(valor, decimais = 1) {
+  return valor.toFixed(decimais).replace('.', ',');
+}
+
+const tanks = {
+  O2: { name: 'OXIGÊNIO', formula: 'O₂', totalVolume: 50, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.5, maxPress: 200, maxTemp: 60, fault: null, color: '#00aaff', liquidClass: 'liquid-o2', history: [] },
+  N2: { name: 'NITROGÊNIO', formula: 'N₂', totalVolume: 75, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.9, maxPress: 250, maxTemp: 80, fault: null, color: '#ffaa00', liquidClass: 'liquid-n2', history: [] },
+  N2O: { name: 'ÓXIDO NITROSO', formula: 'N₂O', totalVolume: 40, currentVolume: 0, pressure: 0, temp: 20, flow: 0, purity: 99.0, maxPress: 150, maxTemp: 50, fault: null, color: '#aa44ff', liquidClass: 'liquid-n2o', history: [] }
+};
+
+const tankKeys = ['O2', 'N2', 'N2O'];
+let running = false, interval = null, currentTestIndex = 0, testPhase = 'normal', emergencyActive = false, waitingConfirmation = false, audioCtx = null;
+
+const faultTypes = [
+  { id: 'overpress', name: 'SOBREPRESSÃO CRÍTICA', icon: '🔴', desc: 'Pressão interna excedeu o limite seguro de operação. Risco iminente de ruptura do vaso de pressão.', action: '1) Acionar a válvula de alívio manual imediatamente.\n2) Isolar a entrada de gás.\n3) Evacuar o raio de 15 metros.\n4) Acionar a brigada de emergência.\n5) Não tentar reparar o equipamento sob pressão.', epi: 'Protetor facial, luvas de raspa, avental de raspa, protetor auricular', effect: (t) => { t.pressure = t.maxPress * (1.1 + Math.random() * 0.3); } },
+  { id: 'overtemp', name: 'SUPERAQUECIMENTO', icon: '🔥', desc: 'Temperatura acima do limite operacional. Risco de aumento de pressão por expansão térmica.', action: '1) Verificar o sistema de refrigeração/ventilação.\n2) Reduzir a vazão de entrada.\n3) Aspergir água na parte externa do cilindro (se seguro).\n4) Monitorar a pressão continuamente.', epi: 'Luvas térmicas, protetor facial, roupa de aproximação de fogo', effect: (t) => { t.temp = t.maxTemp * (1.1 + Math.random() * 0.2); } },
+  { id: 'leak', name: 'VAZAMENTO DETECTADO', icon: '💧', desc: 'Vazamento de gás identificado. Risco de asfixia (N₂) ou enriquecimento de atmosfera (O₂).', action: '1) Isolar a área imediatamente.\n2) Promover a ventilação natural ou forçada do local.\n3) Utilizar detector de gás para mapear a nuvem.\n4) Reparar apenas com o sistema totalmente despressurizado.', epi: 'Máscara autônoma de ar (SCBA), detector portátil de O₂, roupa adequada', effect: (t) => { t.flow = -Math.abs(t.flow || 10) * 0.5; t.currentVolume = Math.max(0, t.currentVolume - 2); } },
+  { id: 'valve', name: 'VÁLVULA TRAVADA', icon: '🔧', desc: 'Válvula de controle não responde aos comandos. Impossível regular o fluxo do gás.', action: '1) Acionar a válvula manual de backup (se disponível).\n2) Isolar o tanque a montante.\n3) Solicitar manutenção urgente.\n4) Preparar tanque reserva para substituição.', epi: 'Luvas de proteção mecânica, óculos de segurança', effect: (t) => { t.flow = 0; } },
+  { id: 'sensor', name: 'FALHA DE INSTRUMENTAÇÃO', icon: '📡', desc: 'Sensor de telemetria com leitura inconsistente. Impossível confiar nos valores exibidos no painel.', action: '1) Conferir as leituras com instrumento padrão portátil.\n2) Operar com monitoramento manual.\n3) Solicitar calibração ou troca do sensor.\n4) Registrar leituras manuais a cada 15 minutos.', epi: 'Multímetro, manômetro padrão, termômetro calibrado', effect: (t) => { t.pressure += (Math.random() - 0.5) * 30; t.temp += (Math.random() - 0.5) * 15; } },
+  { id: 'contam', name: 'CONTAMINAÇÃO DO GÁS', icon: '⚗️', desc: 'Pureza do gás abaixo do especificado. Produto impróprio para uso e pode danificar equipamentos a jusante.', action: '1) Isolar o tanque da rede de distribuição.\n2) Drenar o conteúdo para o sistema de ventilação/exaustão.\n3) Investigar a fonte da contaminação.\n4) Limpar o tanque antes de qualquer reabastecimento.', epi: 'Máscara com filtro químico apropriado, luvas nitrílicas', effect: (t) => { t.purity = 85 + Math.random() * 10; } },
+  { id: 'lowlevel', name: 'NÍVEL CRÍTICO BAIXO', icon: '⚠️', desc: 'Volume abaixo do mínimo operacional. Risco de cavitação em bombas e interrupção do processo.', action: '1) Acionar o sistema de backup (manifold).\n2) Programar o reabastecimento ou troca do cilindro com urgência.\n3) Reduzir o consumo se possível.\n4) Notificar o setor de suprimentos/logística.', epi: 'Nenhum especial - operação padrão', effect: (t) => { t.currentVolume = t.totalVolume * 0.08; } }
+];
+
+function playAlarmSound(type = 'warning') {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.frequency.value = type === 'critical' ? 880 : 440;
+    osc.type = type === 'critical' ? 'square' : 'sine';
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+function logEvent(msg, type = 'info') {
+  const panel = document.getElementById('eventLog'), item = document.createElement('div');
+  item.className = 'event-item event-' + type;
+  item.innerHTML = `<span class="event-time">${new Date().toLocaleTimeString('pt-BR')}</span><span class="event-msg">${msg}</span>`;
+  panel.insertBefore(item, panel.firstChild);
+  while (panel.children.length > 30) panel.removeChild(panel.lastChild);
+}
+
+function updateDateTime() {
+  document.getElementById('datetime').textContent = new Date().toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+setInterval(updateDateTime, 1000); updateDateTime();
+
+function updateGauge(id, value, max) {
+  const el = document.getElementById(id), ratio = Math.min(value / max, 1), offset = 201 * (1 - ratio);
+  el.style.strokeDashoffset = offset;
+  el.setAttribute('stroke', ratio > 0.9 ? '#ff3355' : ratio > 0.75 ? '#ffaa00' : '#00ff88');
+}
+
+function updateTankUI(key) {
+  const t = tanks[key], pct = (t.currentVolume / t.totalVolume) * 100;
+  document.getElementById('liquid' + key).style.height = pct + '%';
+  document.getElementById('volLabel' + key).textContent = formatarBR(t.currentVolume, 1) + ' / ' + t.totalVolume + ' L';
+  document.getElementById('vol' + key).textContent = formatarBR(t.currentVolume, 1) + ' L';
+  document.getElementById('lvl' + key).textContent = formatarBR(pct, 1) + '%';
+  document.getElementById('flow' + key).textContent = formatarBR(t.flow, 1) + ' L/min';
+  document.getElementById('pur' + key).textContent = formatarBR(t.purity, 1) + '%';
+  document.getElementById('pressVal' + key).textContent = formatarBR(t.pressure, 0);
+  document.getElementById('tempVal' + key).textContent = formatarBR(t.temp, 0);
+  
+  const pressRatio = t.pressure / t.maxPress, tempRatio = t.temp / t.maxTemp;
+  const setValColor = (id, cls) => document.getElementById(id).className = 'data-value ' + cls;
+  setValColor('vol' + key, pct < 20 ? 'crit' : pct < 40 ? 'warn' : 'ok');
+  setValColor('flow' + key, t.flow < 0 ? 'crit' : 'ok');
+  setValColor('pur' + key, t.purity < 95 ? 'crit' : t.purity < 98 ? 'warn' : 'ok');
+  
+  updateGauge('gaugePress' + key, t.pressure, t.maxPress);
+  updateGauge('gaugeTemp' + key, t.temp, t.maxTemp);
+  
+  const card = document.getElementById('card' + key), badge = document.getElementById('badge' + key);
+  if (t.fault) {
+    card.className = 'tank-card state-critical'; badge.className = 'tank-state-badge badge-critical'; badge.textContent = '⚠ FALHA';
+    document.getElementById('fault' + key).classList.add('active');
+    document.getElementById('faultIcon' + key).textContent = t.fault.icon;
+    document.getElementById('faultName' + key).textContent = t.fault.name;
+    document.getElementById('faultDesc' + key).textContent = t.fault.desc;
+    document.getElementById('faultAction' + key).textContent = t.fault.action;
+    document.getElementById('faultEpi' + key).textContent = '🦺 EPIs: ' + t.fault.epi;
+  } else if (pressRatio > 0.8 || tempRatio > 0.8 || pct < 20) {
+    card.className = 'tank-card state-warning'; badge.className = 'tank-state-badge badge-warning'; badge.textContent = 'ATENÇÃO';
+    document.getElementById('fault' + key).classList.remove('active');
+  } else {
+    card.className = 'tank-card state-normal'; badge.className = 'tank-state-badge badge-normal'; badge.textContent = 'NORMAL';
+    document.getElementById('fault' + key).classList.remove('active');
+  }
+}
+
+function updateCycleDisplay() {
+  const key = tankKeys[currentTestIndex];
+  document.getElementById('currentTankName').textContent = tanks[key].name;
+  document.getElementById('currentTankNum').textContent = (currentTestIndex + 1);
+}
+
+function updateGlobalStatus() {
+  const gs = document.getElementById('globalStatus'), alarmBar = document.getElementById('alarmBar');
+  const faults = tankKeys.filter(k => tanks[k].fault);
+  if (emergencyActive) {
+    gs.className = 'global-status status-critical'; gs.textContent = '⛔ PARADA DE EMERGÊNCIA ATIVA';
+    alarmBar.textContent = '🚨 PARADA DE EMERGÊNCIA ACIONADA - TODOS OS SISTEMAS ISOLADOS'; alarmBar.style.color = '#ff3355';
+  } else if (faults.length > 0) {
+    gs.className = 'global-status status-critical'; gs.textContent = '⚠ ALARME CRÍTICO';
+    alarmBar.textContent = '🚨 ' + faults.map(k => `${tanks[k].fault.icon} ${tanks[k].name}: ${tanks[k].fault.name}`).join('  •  ') + '  •  Aguardando confirmação...';
+    alarmBar.style.color = '#ff3355';
+  } else {
+    gs.className = 'global-status status-normal'; gs.textContent = '● OPERAÇÃO NORMAL';
+    alarmBar.textContent = '✓ Todos os tanques operando dentro dos parâmetros especificados - Sistema estável';
+    alarmBar.style.color = '#00ff88';
+  }
+}
+
+const trendCanvas = document.getElementById('trendCanvas'), trendCtx = trendCanvas.getContext('2d'), MAX_POINTS = 60;
+function resizeCanvas() { trendCanvas.width = trendCanvas.offsetWidth; trendCanvas.height = trendCanvas.offsetHeight; }
+resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+
+function drawTrend() {
+  const w = trendCanvas.width, h = trendCanvas.height;
+  trendCtx.clearRect(0, 0, w, h);
+  trendCtx.strokeStyle = '#1a2340'; trendCtx.lineWidth = 1;
+  for (let i = 0; i < 5; i++) { trendCtx.beginPath(); trendCtx.moveTo(0, (h / 5) * i); trendCtx.lineTo(w, (h / 5) * i); trendCtx.stroke(); }
+  tankKeys.forEach(key => {
+    const history = tanks[key].history;
+    if (history.length < 2) return;
+    trendCtx.strokeStyle = tanks[key].color; trendCtx.lineWidth = 2; trendCtx.beginPath();
+    history.forEach((val, i) => {
+      const x = (i / (MAX_POINTS - 1)) * w, y = h - (val / 300) * h;
+      i === 0 ? trendCtx.moveTo(x, y) : trendCtx.lineTo(x, y);
+    });
+    trendCtx.stroke();
+  });
+}
+
+function recordHistory() {
+  tankKeys.forEach(key => { tanks[key].history.push(tanks[key].pressure); if (tanks[key].history.length > MAX_POINTS) tanks[key].history.shift(); });
+  drawTrend();
+}
+
+function simulate() {
+  tankKeys.forEach(key => {
+    const t = tanks[key];
+    if (emergencyActive) { t.flow = 0; t.pressure = Math.max(0, t.pressure - 0.5); }
+    else if (!t.fault) {
+      if (t.currentVolume < t.totalVolume * 0.95) {
+        t.currentVolume += 0.3 + Math.random() * 0.2; t.pressure += 0.8 + Math.random() * 0.4;
+        t.temp += (Math.random() - 0.4) * 0.3; t.flow = 15 + Math.random() * 8;
+      } else { t.currentVolume = t.totalVolume * (0.95 + Math.random() * 0.03); t.flow = 2 + Math.random() * 2; }
+    } else { t.fault.effect(t); }
+    t.pressure = Math.max(0, Math.min(t.pressure, t.maxPress * 1.5));
+    t.temp = Math.max(15, Math.min(t.temp, t.maxTemp * 1.5));
+    t.currentVolume = Math.max(0, Math.min(t.currentVolume, t.totalVolume));
+    updateTankUI(key);
+  });
+  recordHistory(); updateGlobalStatus();
+}
+
+function startTest() {
+  if (!running || emergencyActive || waitingConfirmation) return;
+  const key = tankKeys[currentTestIndex]; testPhase = 'testing'; updateCycleDisplay();
+  logEvent(`🔍 Iniciando teste em ${tanks[key].name} (${tanks[key].formula})`, 'info');
+  setTimeout(() => { if (!running || waitingConfirmation) return; applyFault(key); }, 2500);
+}
+
+function applyFault(key) {
+  const fault = faultTypes[Math.floor(Math.random() * faultTypes.length)];
+  tanks[key].fault = fault; testPhase = 'fault'; waitingConfirmation = true;
+  logEvent(`🚨 ${tanks[key].name}: ${fault.icon} ${fault.name}`, 'crit');
+  logEvent(`   → ⏱️ Leia as instruções e clique em CONFIRMAR`, 'info');
+  playAlarmSound('critical'); updateTankUI(key); updateGlobalStatus();
+}
+
+function confirmReading(key) {
+  if (!waitingConfirmation) return;
+  const t = tanks[key]; if (!t.fault) return;
+  t.fault = null;
+  if (t.pressure > t.maxPress) t.pressure = t.maxPress * 0.7;
+  if (t.temp > t.maxTemp) t.temp = 40;
+  if (t.flow < 0) t.flow = 15;
+  if (t.purity < 95) t.purity = 99;
+  if (t.currentVolume < t.totalVolume * 0.2) t.currentVolume = t.totalVolume * 0.5;
+  
+  logEvent(`✅ ${t.name}: Operador confirmou leitura - falha corrigida`, 'ok');
+  playAlarmSound('warning'); waitingConfirmation = false;
+  updateTankUI(key); updateGlobalStatus();
+  
+  currentTestIndex++;
+  if (currentTestIndex >= 3) {
+    logEvent(`✔️ Ciclo completo finalizado - todos os 3 tanques testados!`, 'ok');
+    currentTestIndex = 0; updateCycleDisplay();
+    setTimeout(() => { if (running && !waitingConfirmation) startTest(); }, 3000);
+  } else {
+    logEvent(`➡️ Próximo teste: ${tanks[tankKeys[currentTestIndex]].name}`, 'info');
+    updateCycleDisplay();
+    setTimeout(() => { if (running && !waitingConfirmation) startTest(); }, 2000);
+  }
+}
+
+function toggleSim() {
+  running = !running; const btn = document.getElementById('btnStart');
+  if (running) {
+    btn.textContent = '⏸ PAUSAR'; logEvent('▶ Sistema iniciado - monitoramento ativo', 'info');
+    interval = setInterval(simulate, 500); updateCycleDisplay();
+    setTimeout(() => { if (running) startTest(); }, 2000);
+  } else { btn.textContent = '▶ INICIAR'; logEvent('⏸ Sistema pausado', 'info'); clearInterval(interval); }
+}
+
+function resetSim() {
+  running = false; emergencyActive = false; waitingConfirmation = false; clearInterval(interval);
+  document.getElementById('btnStart').textContent = '▶ INICIAR';
+  document.getElementById('emergencyBtn').classList.remove('active');
+  currentTestIndex = 0; testPhase = 'normal';
+  tankKeys.forEach(key => {
+    tanks[key].currentVolume = 0; tanks[key].pressure = 0; tanks[key].temp = 20;
+    tanks[key].flow = 0; tanks[key].purity = key === 'O2' ? 99.5 : key === 'N2' ? 99.9 : 99.0;
+    tanks[key].fault = null; tanks[key].history = []; updateTankUI(key);
+  });
+  updateGlobalStatus(); updateCycleDisplay(); drawTrend();
+  logEvent('⟲ Sistema reiniciado', 'info');
+}
+
+function triggerEmergency() {
+  emergencyActive = !emergencyActive; const btn = document.getElementById('emergencyBtn');
+  if (emergencyActive) {
+    btn.classList.add('active'); logEvent('⛔ PARADA DE EMERGÊNCIA ACIONADA', 'crit'); playAlarmSound('critical');
+    tankKeys.forEach(key => { if (tanks[key].fault) { tanks[key].fault = null; tanks[key].flow = 0; } });
+    waitingConfirmation = false;
+  } else { btn.classList.remove('active'); logEvent('✓ Parada de emergência desacionada', 'ok'); }
+  updateGlobalStatus();
+}
+
+function acknowledgeAlarm() { logEvent('✓ Alarme reconhecido pelo operador', 'info'); playAlarmSound('warning'); }
+function triggerTest() {
+  if (!running) { logEvent('⚠ Inicie a simulação antes de testar', 'warn'); return; }
+  if (waitingConfirmation) { logEvent('⚠ Aguarde confirmação do teste atual', 'warn'); return; }
+  logEvent(`🔧 Teste manual acionado em ${tanks[tankKeys[currentTestIndex]].name}`, 'info');
+  applyFault(tankKeys[currentTestIndex]);
+}
+
+tankKeys.forEach(updateTankUI); updateGlobalStatus(); updateCycleDisplay(); drawTrend();
+</script>
+</body>
+</html>
+🚀 v5.0: Padronização completa ABNT/INMETRO (vírgulas, NBR 12188, nota N2O)
