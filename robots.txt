@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://acelinodomingos.github.io/simulador-scada-tanques/sitemap.xml
