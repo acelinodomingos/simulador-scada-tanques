@@ -704,7 +704,10 @@ function triggerEmergency() {
     btn.classList.add('active'); logEvent('⛔ PARADA DE EMERGÊNCIA ACIONADA', 'crit'); playAlarmSound('critical');
     tankKeys.forEach(key => { if (tanks[key].fault) { tanks[key].fault = null; tanks[key].flow = 0; } });
     waitingConfirmation = false;
-  } else { btn.classList.remove('active'); logEvent('✓ Parada de emergência desacionada', 'ok'); }
+  } else {
+    btn.classList.remove('active'); logEvent('✓ Parada de emergência desacionada', 'ok');
+    if (running && !waitingConfirmation) { setTimeout(() => { if (running && !waitingConfirmation) startTest(); }, 2000); }
+  }
   updateGlobalStatus();
 }
 
